@@ -5,10 +5,12 @@ import Word from './components/Word';
 import Popup from './components/Popup';
 import Notification from './components/Notification';
 import { useEffect, useState } from 'react';
-import {showNotification as show} from './helpers/helpers';
+import {checkWin, showNotification as show} from './helpers/helpers';
 import {data as words} from './data';
 import Keyboard from './components/Keyboard';
 import Hint from './components/Hint';
+import Statistics from './components/Statistics';
+import Help from './components/Help';
 
 
 let selectedWord;
@@ -27,6 +29,8 @@ function App() {
   const [wrongLetters, setWrongLetters] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+  const [showStats, setShowStats] = useState(false);
  
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -62,6 +66,38 @@ function App() {
     else setShowHint(false);
   }, [wrongLetters])
 
+  useEffect(() => {
+    let gameStatus = checkWin(correctLetters, wrongLetters, selectedWord);
+    const gameStatsInit = {
+      winCount: 0,
+      loseCount: 0,
+      gameCount: 0,
+      guessDistribution: [0, 0, 0, 0, 0, 0]
+    }
+    let gameStats = {};
+
+    if(localStorage.getItem("gameStats") === null) 
+        localStorage.setItem("gameStats", JSON.stringify(gameStatsInit));
+    console.log(JSON.parse(localStorage.getItem("gameStats")));
+
+    gameStats = JSON.parse(localStorage.getItem("gameStats"));
+
+    if(canPlay === false) {
+      if(gameStatus === 'win') {
+        gameStats.winCount += 1;
+        gameStats.guessDistribution[wrongLetters.length] += 1;
+        localStorage.setItem("gameStats", JSON.stringify(gameStats));
+      } else if(gameStatus === 'lose') {
+          gameStats.loseCount += 1; 
+          localStorage.setItem("gameStats", JSON.stringify(gameStats));
+      }
+    }
+    // } else {
+    //   gameStats.gameCount += 1;
+    //   localStorage.setItem("gameStats", JSON.stringify(gameStats));
+    // }
+  }, [canPlay, correctLetters, wrongLetters])
+
   const playAgain = () => {
     setCanPlay(true);
 
@@ -73,7 +109,9 @@ function App() {
 
   return (
     <div className='app'>
-      <Header/> 
+      <Header setShowStats={setShowStats} setShowHelp={setShowHelp}/> 
+      <Statistics setShowStats={setShowStats} showStats={showStats}/>
+      <Help setShowHelp={setShowHelp} showHelp={showHelp}/>
       <div className="game-container">
         <Figure wrongLetters={wrongLetters}/>
         {/* <WrongLetters wrongLetters={wrongLetters}/> */}
