@@ -38,7 +38,6 @@ function App() {
 
       if(canPlay && keyCode >= 65 && keyCode <= 90) {
         const letter = key.toUpperCase();
-        console.log(key, keyCode);
         
         if(selectedWord.includes(letter)) {
           if(!correctLetters.includes(letter)) {
@@ -78,7 +77,6 @@ function App() {
 
     if(localStorage.getItem("gameStats") === null) 
         localStorage.setItem("gameStats", JSON.stringify(gameStatsInit));
-    console.log(JSON.parse(localStorage.getItem("gameStats")));
 
     gameStats = JSON.parse(localStorage.getItem("gameStats"));
 
