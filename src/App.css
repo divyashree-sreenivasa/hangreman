@@ -1,38 +1,224 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  background-color: #34495e;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100vh - 60px);
+  margin: 0;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 60px;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #22313f;
+}
+
+header a {
+  text-decoration: none;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  margin: 0 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.game-container {
+  padding: 20px 30px;
+  position: relative;
+  margin: auto;
+  /* height: 350px; */
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.figure-container {
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  
+}
+
+.figure-part {
+  display: none;
+}
+
+.word {
+  display: flex;
+  width: 100vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* position: absolute; 
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%); */
+  margin: 20px 0;
+}
+
+.letter {
+  border: 1px solid #22313f;
+  display: inline-flex;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  background-color: #3e5e7b;
+}
+
+.keyboard {
+  width: 95vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard-row{
+  display: flex;
+}
+
+.keyboard button {
+  border: 1px solid #22313f;
+  display: inline-flex;
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  max-height: 40px;
+  max-width: 40px;
+  border-radius: 5px;
+  padding: 7px;
+  background-color: #202e3a;
+  color: white;
+  cursor: pointer;
+}
+
+.keyboard button:active {
+  outline: 0;
+}
+
+.hint-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* display: flex; */
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-container .wrapper {
+  position: relative;
+}
+
+.popup-container .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.popup {
+  background: #3e5e7b;
+  border-radius: 5px;
+  box-shadow: 0 15px 10px 3px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px 40px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.popup button {
+  cursor: pointer;
+  background-color: #22313f;
+  color: #fff;
+  border: 0;
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+.popup button:active {
+  transform: scale(0.98);
+}
+
+.popup button:focus {
+  outline: 0;
+}
+
+.popup h3:nth-of-type(1) {
+  color: #3CB371;
+}
+.popup h3 span {
+  font-weight: 400;
+  font-size: 1rem;
+  color: white;
+}
+
+.popup h3:nth-child(3) {
+  font-weight: 500;
+}
+
+.popup p {
+  color: rgb(176, 176, 84);
+  line-height: 1.4;
+  letter-spacing: 0.4px;
+}
+
+.notification-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px 10px 0 0;
+  padding: 15px 20px;
+  position: absolute;
+  bottom: -50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.notification-container p {
+  margin: 0;
+}
+
+.notification-container.show {
+  transform: translateY(-50px);
+}
+
+@media only screen and (min-width: 500px) {
+  .keyboard button {
+    width: 40px;
+    height: 40px;
   }
 }
