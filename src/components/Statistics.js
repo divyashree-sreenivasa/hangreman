@@ -12,7 +12,8 @@ const Statistics = ({ setShowStats, showStats }) => {
         <button className="close-btn" onClick={() => setShowStats(false)}>X</button>
         <div className="popup popup-statistics">
             <h3><b>STATISTICS</b></h3>
-            <h3>Win %: {haveGameStats ? gameStats.winCount * 100/(gameStats.winCount + gameStats.loseCount) : 0}</h3>
+            {console.log(haveGameStats)}
+            <h3>Win %: {gameStats.winCount === 0 ? 0 : (gameStats.winCount * 100/(gameStats.winCount + gameStats.loseCount))}</h3>
             {/* <div className="distribution-container">
              <h2>WIN GUESS DISTRIBUTION</h2> 
             
